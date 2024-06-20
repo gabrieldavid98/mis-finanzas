@@ -6,7 +6,7 @@ import { icons } from "../../constants";
 import useAppwrite from "../../lib/useAppwrite";
 import { getUserSavings, signOut } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { EmptyState, InfoBox } from "../../components";
+import { CustomButton, EmptyState, InfoBox } from "../../components";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
@@ -64,6 +64,11 @@ const Profile = () => {
                 titleStyles="text-xl"
               />
             </View>
+            <CustomButton
+              title="Agregar Información Financiera"
+              handlePress={() => router.push('/financials/create')}
+              containerStyles="mt-7 w-full"
+            />
           </View>
         )}
       />

@@ -51,6 +51,14 @@ const RootLayout = () => {
             headerTintColor: '#CDCDE0'
           }}
         />
+        <Stack.Screen
+          name="financials/create"
+          options={{
+            title: "",
+            headerStyle: { backgroundColor: '#161622' },
+            headerTintColor: '#CDCDE0'
+          }}
+        />
       </Stack>
     </GlobalProvider>
   );
