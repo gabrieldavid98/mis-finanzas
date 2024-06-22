@@ -8,6 +8,12 @@ import GlobalProvider from "../context/GlobalProvider";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+const defaultScreenOpts = {
+  title: "",
+  headerStyle: { backgroundColor: '#161622' },
+  headerTintColor: '#CDCDE0'
+}
+
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
@@ -43,22 +49,9 @@ const RootLayout = () => {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="savings/index"
-          options={{
-            title: "",
-            headerStyle: { backgroundColor: '#161622' },
-            headerTintColor: '#CDCDE0'
-          }}
-        />
-        <Stack.Screen
-          name="financials/create"
-          options={{
-            title: "",
-            headerStyle: { backgroundColor: '#161622' },
-            headerTintColor: '#CDCDE0'
-          }}
-        />
+        <Stack.Screen name="savings/index" options={defaultScreenOpts} />
+        <Stack.Screen name="financials/create" options={defaultScreenOpts} />
+        <Stack.Screen name="financials/create-movement" options={defaultScreenOpts} />
       </Stack>
     </GlobalProvider>
   );

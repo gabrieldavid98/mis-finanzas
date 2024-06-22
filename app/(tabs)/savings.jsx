@@ -3,50 +3,39 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, RefreshControl, Text, View } from "react-native";
 
 import useAppwrite from "../../lib/useAppwrite";
-import { getUserMovements, getUserFinacials } from "../../lib/appwrite";
+import { getUserSavings } from "../../lib/appwrite";
 import { EmptyState, CustomButton } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { router } from "expo-router";
 import SavingCard from "../../components/SavingCard";
-import MonthlyIncomeCard from "../../components/MonthlyIncomeCard";
-import MovementCard from "../../components/MovementCard";
 
-const Home = () => {
+const Savings = () => {
   const { user } = useGlobalContext();
-  const {
-    data: movements,
-    refetch: refetchMovements,
-  } = useAppwrite(() => getUserMovements(user.$id));
-  const {
-    data: financials,
-    refetch: refetchFinancials,
-  } = useAppwrite(() => getUserFinacials(user.$id));
+  const { data: savings, refetch } = useAppwrite(() => getUserSavings(user.$id));
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await refetchMovements();
-    await refetchFinancials();
+    await refetch();
     setRefreshing(false);
   };
 
   const onActionCompleted = async () => {
-    await refetchMovements()
+    await refetch()
   }
-
-  const totalSpending = movements.reduce(
-    (acc, cur) => acc + cur.targetAmount, 0.0)
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
-        data={movements}
+        data={savings}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-          <MovementCard
+          <SavingCard
             id={item.$id}
             title={item.description}
-            amount={item.targetAmount}
+            amount={item.amount}
+            saved={item.saved}
+            dueAmount={item.dueAmount}
             onActionCompleted={onActionCompleted}
           />
         )}
@@ -63,20 +52,16 @@ const Home = () => {
               </View>
             </View>
             <CustomButton
-              title="Nuevo Movimiento"
-              handlePress={() => router.push('/financials/create-movement')}
+              title="Nuevo Ahorro"
+              handlePress={() => router.push('/savings')}
               containerStyles="mt-7"
-            />
-            <MonthlyIncomeCard
-              amount={financials?.monthlyIncome ?? 0}
-              totalSpending={totalSpending}
             />
           </View>
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="Sin Movimientos"
-            subtitle="Cree Movimientos Financieros"
+            title="Sin Metas de Ahorro"
+            subtitle="Cree una Meta de Ahorro"
           />
         )}
         refreshControl={
@@ -87,4 +72,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Savings;

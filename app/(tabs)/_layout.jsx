@@ -61,6 +61,21 @@ const TabLayout = () => {
           }}
         />
         <Tabs.Screen
+          name="savings"
+          options={{
+            title: "Ahorros",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.plus}
+                color={color}
+                name="Ahorros"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="calculator"
           options={{
             title: "Calculadora",

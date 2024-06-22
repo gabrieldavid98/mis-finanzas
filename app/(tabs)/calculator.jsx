@@ -10,10 +10,10 @@ import { currencyFormat } from "../../lib/utils";
 
 const Calculator = () => {
   const [form, setForm] = useState({
-    initialInvesment: 0,
-    monthlyContribution: 0,
-    lengthInYears: 0,
-    interestRate: 0,
+    initialInvesment: 0.0,
+    monthlyContribution: 0.0,
+    lengthInYears: 1.0,
+    interestRate: 0.0,
   });
 
   const [total, setTotal] = useState(0)
@@ -43,7 +43,11 @@ const Calculator = () => {
         <FormField
           title="Inversión Inicial"
           value={form.initialInvesment}
-          handleChangeText={(e) => setForm({ ...form, initialInvesment: parseFloat(e) })}
+          handleChangeText={e => {
+            let num = parseFloat(e)
+            if (Number.isNaN(num)) num = 0;
+            setForm({ ...form, initialInvesment: num })
+          }}
           otherStyles="mt-7"
           inputMode="decimal"
         />
@@ -52,7 +56,11 @@ const Calculator = () => {
           title="Contribución Mensual"
           value={form.monthlyContribution}
           placeholder="0"
-          handleChangeText={(e) => setForm({ ...form, monthlyContribution: parseFloat(e) })}
+          handleChangeText={e => {
+            let num = parseFloat(e)
+            if (Number.isNaN(num)) num = 0;
+            setForm({ ...form, monthlyContribution: num })
+          }}
           otherStyles="mt-7"
           inputMode="decimal"
         />
@@ -61,7 +69,11 @@ const Calculator = () => {
           title="Duración en Años"
           value={form.lengthInYears}
           placeholder="10"
-          handleChangeText={(e) => setForm({ ...form, lengthInYears: parseInt(e) })}
+          handleChangeText={e => {
+            let num = parseInt(e)
+            if (Number.isNaN(num)) num = 1;
+            setForm({ ...form, lengthInYears: num })
+          }}
           otherStyles="mt-7"
           inputMode="number"
         />
@@ -70,7 +82,11 @@ const Calculator = () => {
           title="Interes Efectivo Anual"
           value={form.interestRate}
           placeholder="10.5"
-          handleChangeText={(e) => setForm({ ...form, interestRate: parseFloat(e) })}
+          handleChangeText={e => {
+            let num = parseFloat(e)
+            if (Number.isNaN(num)) num = 0.0;
+            setForm({ ...form, interestRate: num })
+          }}
           otherStyles="mt-7"
           inputMode="decimal"
         />

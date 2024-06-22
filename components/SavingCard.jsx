@@ -69,7 +69,7 @@ const SavingCard = ({
             <View className="flex flex-row w-full justify-around">
               <TinyButton
                 title="Eliminar"
-                containerStyles="bg-red-300"
+                containerStyles="bg-red-500"
                 isLoading={deleteLoading}
                 handlePress={() => onDelete()}
               />
