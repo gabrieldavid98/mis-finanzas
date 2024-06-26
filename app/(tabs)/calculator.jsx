@@ -12,7 +12,7 @@ const Calculator = () => {
   const [form, setForm] = useState({
     initialInvesment: 0.0,
     monthlyContribution: 0.0,
-    lengthInYears: 1.0,
+    lengthInYears: 0.0,
     interestRate: 0.0,
   });
 
@@ -71,7 +71,7 @@ const Calculator = () => {
           placeholder="10"
           handleChangeText={e => {
             let num = parseInt(e)
-            if (Number.isNaN(num)) num = 1;
+            if (Number.isNaN(num)) num = 0;
             setForm({ ...form, lengthInYears: num })
           }}
           otherStyles="mt-7"

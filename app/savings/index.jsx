@@ -17,9 +17,9 @@ const CreateSaving = () => {
   const [form, setForm] = useState({
     startDate: new Date(),
     description: "",
-    amount: 10000.0,
-    dues: 1.0,
-    dueAmount: 50.0,
+    amount: 0.0,
+    dues: 0.0,
+    dueAmount: 0.0,
   });
 
   const submit = async () => {
@@ -37,16 +37,16 @@ const CreateSaving = () => {
       await createSaving({ ...form, creator: user.$id })
 
       Alert.alert("Realizado", "Meta de Ahorro Guardada");
-      router.push("/home");
+      router.push("/savings-home");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
       setForm({
         startDate: new Date(),
         description: "",
-        amount: 10000.0,
-        dues: 1.0,
-        dueAmount: 50.0,
+        amount: 0.0,
+        dues: 0.0,
+        dueAmount: 0.0,
       });
 
       setSaving(false);
@@ -79,7 +79,11 @@ const CreateSaving = () => {
           title="Valor"
           value={form.amount}
           placeholder="1000000"
-          handleChangeText={(e) => setForm({ ...form, amount: parseFloat(e) })}
+          handleChangeText={e => {
+            let num = parseFloat(e)
+            if (Number.isNaN(num)) num = 0;
+            setForm({ ...form, amount: num })
+          }}
           otherStyles="mt-7"
           inputMode="decimal"
         />
@@ -88,7 +92,19 @@ const CreateSaving = () => {
           title="Cuotas"
           value={form.dues}
           placeholder="10"
-          handleChangeText={(e) => setForm({ ...form, dues: parseFloat(e) })}
+          handleChangeText={e => {
+            let num = parseFloat(e)
+            if (Number.isNaN(num)) num = 0;
+
+            if (num === 0) {
+              setForm({ ...form, dues: num })
+              return
+            }
+
+            if (num > 0) {
+              setForm({ ...form, dues: num, dueAmount: form.amount / num })
+            }
+          }}
           otherStyles="mt-7"
           inputMode="decimal"
         />
@@ -97,9 +113,14 @@ const CreateSaving = () => {
           title="Valor Cuotas"
           value={form.dueAmount}
           placeholder="100000"
-          handleChangeText={(e) => setForm({ ...form, dueAmount: parseFloat(e) })}
+          handleChangeText={e => {
+            let num = parseFloat(e)
+            if (Number.isNaN(num)) num = 0;
+            setForm({ ...form, dueAmount: num })
+          }}
           otherStyles="mt-7"
           inputMode="decimal"
+          editable={false}
         />
 
         <CustomButton

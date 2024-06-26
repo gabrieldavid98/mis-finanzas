@@ -61,7 +61,7 @@ const TabLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="savings"
+          name="savings-home"
           options={{
             title: "Ahorros",
             headerShown: false,

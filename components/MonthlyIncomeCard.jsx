@@ -4,6 +4,10 @@ import { currencyFormat } from "../lib/utils";
 
 
 const MonthlyIncomeCard = ({ amount, totalSpending }) => {
+  if (amount === 0) {
+    return <></>
+  }
+
   const percent = (totalSpending === 0 ? 100 : (amount - totalSpending) * 100 / amount)
 
   return (
@@ -36,7 +40,8 @@ const MonthlyIncomeCard = ({ amount, totalSpending }) => {
                 className="font-psemibold text-lg text-white mb-2"
                 numberOfLines={1}
               >
-                {currencyFormat(amount) + ' / ' + currencyFormat(amount - totalSpending)}
+                {currencyFormat(amount) +
+                  (totalSpending > 0 ? ' / ' + currencyFormat(amount - totalSpending) : '')}
               </Text>
               <Text
                 className="font-psemibold text-lg text-red-500"

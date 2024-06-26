@@ -65,7 +65,7 @@ const Profile = () => {
               />
             </View>
             <CustomButton
-              title="Agregar Información Financiera"
+              title="Agregar Ingreso Mensual"
               handlePress={() => router.push('/financials/create')}
               containerStyles="mt-7 w-full"
             />

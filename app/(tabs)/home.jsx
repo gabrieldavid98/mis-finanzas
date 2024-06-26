@@ -11,16 +11,40 @@ import SavingCard from "../../components/SavingCard";
 import MonthlyIncomeCard from "../../components/MonthlyIncomeCard";
 import MovementCard from "../../components/MovementCard";
 
+const buttons = financials => {
+  if (Array.isArray(financials)) {
+    return <></>
+  }
+
+  if (!financials) {
+    return (
+      <CustomButton
+        title="Agregar Ingreso Mensual"
+        handlePress={() => router.push('/financials/create')}
+        containerStyles="mt-7 w-full"
+      />
+    )
+  }
+
+  return (
+    <CustomButton
+      title="Nuevo Movimiento"
+      handlePress={() => router.push('/financials/create-movement')}
+      containerStyles="mt-7"
+    />
+  )
+}
+
 const Home = () => {
   const { user } = useGlobalContext();
-  const {
-    data: movements,
-    refetch: refetchMovements,
-  } = useAppwrite(() => getUserMovements(user.$id));
   const {
     data: financials,
     refetch: refetchFinancials,
   } = useAppwrite(() => getUserFinacials(user.$id));
+  const {
+    data: movements,
+    refetch: refetchMovements,
+  } = useAppwrite(() => getUserMovements(user.$id));
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -62,11 +86,7 @@ const Home = () => {
                 </Text>
               </View>
             </View>
-            <CustomButton
-              title="Nuevo Movimiento"
-              handlePress={() => router.push('/financials/create-movement')}
-              containerStyles="mt-7"
-            />
+            {buttons(financials)}
             <MonthlyIncomeCard
               amount={financials?.monthlyIncome ?? 0}
               totalSpending={totalSpending}

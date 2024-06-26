@@ -31,7 +31,7 @@ const CreateSaving = () => {
     try {
       await createMovement({ ...form, owner: user.$id })
 
-      Alert.alert("Realizado", "Movimiento Guardada");
+      Alert.alert("Realizado", "Movimiento Guardado");
       router.push("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
